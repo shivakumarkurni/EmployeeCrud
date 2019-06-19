@@ -10,6 +10,6 @@ import com.emp.crud.model.Employee;
 @Repository
 public interface EmployeeRepository  extends JpaRepository<Employee, Long>{
 
-	Optional<Employee> findByEmpId(long id);
+	public Employee findByEmpId(long id);
 
 }
