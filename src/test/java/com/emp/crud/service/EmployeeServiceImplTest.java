@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
 
 import com.emp.crud.dto.EmployeeDTO;
 import com.emp.crud.exception.ApplicationException;
@@ -29,6 +31,12 @@ public class EmployeeServiceImplTest {
 
 	@Mock
 	EmployeeRepository empRepo;
+	
+	
+	  @Mock ModelMapper modelMapper;
+	  
+	//  @Before public void setUp() { modelMapper=new ModelMapper(); }
+	 
 
 	int expecteEmpCount = 3;
 
@@ -68,29 +76,50 @@ public class EmployeeServiceImplTest {
 	}
 
 	@Test
-	public void getEmpByIdTest() throws ApplicationException {
+	public void getEmpByIdTest() {
 
-		long id = 1;
+		long id = 3;
 
 		Employee emp = new Employee();
 
-		emp.setEmpId(1);
+		emp.setEmpId(3);
 		emp.setEmpAddress("bengaluru");
 		emp.setEmpContact("1313");
 		emp.setEmpEmail("asdfsd@gmail.com");
 		emp.setEmpName("Shiva");
+		
+		EmployeeDTO actualEmp = new EmployeeDTO();
 
-		Mockito.when(empRepo.findByEmpId(id)).thenReturn(emp);
+		actualEmp.setEmpId(3);
+		actualEmp.setEmpAddress("bengaluru");
+		actualEmp.setEmpContact("1313");
+		actualEmp.setEmpEmail("asdfsd@gmail.com");
+		actualEmp.setEmpName("Shiva");
+		
+		
+		Mockito.when(modelMapper.map(emp,EmployeeDTO.class)).thenReturn(actualEmp);
+		
+		/*
+		 * actualEmp.setEmpId(3); actualEmp.setEmpAddress("bengaluru");
+		 * actualEmp.setEmpContact("1313"); actualEmp.setEmpEmail("asdfsd@gmail.com");
+		 * actualEmp.setEmpName("Shiva");
+*/		
+		 
 
-		EmployeeDTO actualEmp = empService.getEmpById(id);
+		Mockito.when(empRepo.findByEmpId(Mockito.anyLong())).thenReturn(emp);
+	//	actualEmp =  modelMapper.map(emp, EmployeeDTO.class);
+		
+		actualEmp = empService.getEmpById(emp.getEmpId());
+		
+		System.out.println("actualEmp "+actualEmp.getEmpId());
 
-		assertEquals(emp, actualEmp);
+		assertEquals(emp.getEmpId(), actualEmp.getEmpId());
 	}
 
 	@Test
 	public void updateEmployeeDetails() {
 
-		Employee emp = new Employee();
+		EmployeeDTO emp = new EmployeeDTO();
 
 		emp.setEmpId(1);
 		emp.setEmpAddress("bengaluru");
@@ -98,19 +127,27 @@ public class EmployeeServiceImplTest {
 		emp.setEmpEmail("asdfsd@gmail.com");
 		emp.setEmpName("Shiva");
 
-		Mockito.when(empRepo.findById(emp.getEmpId())).thenReturn(Optional.of(emp));
+		Employee empEntity = new Employee();
 
-		Mockito.when(empRepo.save(emp)).thenReturn(emp);
+		empEntity.setEmpId(1);
+		empEntity.setEmpAddress("bengaluru");
+		empEntity.setEmpContact("1313");
+		empEntity.setEmpEmail("asdfsd@gmail.com");
+		empEntity.setEmpName("Shiva");
 
-		/*
-		 * String actualEmp = empService.updateEmpDetails(emp);
-		 * 
-		 * System.out.println("actualEmp "+actualEmp);
-		 * 
-		 * assertEquals("employee details updated successfully", actualEmp);
-		 * 
-		 * assertNotEquals("employee details updated successfullyafadf", actualEmp);
-		 */
+		Mockito.when(empRepo.findById(emp.getEmpId())).thenReturn(Optional.of(empEntity));
+
+		Mockito.when(empRepo.save(empEntity)).thenReturn(empEntity);
+
+
+		String actualEmp = empService.updateEmpDetails(emp);
+
+		System.out.println("actualEmp "+actualEmp);
+
+		assertEquals("employee details updated successfully", actualEmp);
+
+		assertNotEquals("employee details updated successfullyafadf", actualEmp);
+
 
 	}
 
@@ -128,18 +165,18 @@ public class EmployeeServiceImplTest {
 
 		Mockito.when(empRepo.findById((long) 1)).thenReturn(Optional.of(emp));
 		//Mockito.verify(empRepo.deleteById(1L));
-		
-//		doNothing().when(empRepo).deleteById(1L);
-//		EmployeeRepository repo = Mockito.mock(EmployeeRepository.class);
-			//Mockito.when(empRepo.deleteById(1L)).t;
-		
+
+		//		doNothing().when(empRepo).deleteById(1L);
+		//		EmployeeRepository repo = Mockito.mock(EmployeeRepository.class);
+		//Mockito.when(empRepo.deleteById(1L)).t;
+
 		String actaul=empService.deleteEmpById(emp.getEmpId());
 		assertEquals("Employee deleted successfully", actaul);
-		
+
 		String actual2=empService.deleteEmpById(34L);
-		System.out.println(actual2);
+	//	System.out.println(actual2);
 		assertEquals("Employee with id 34 Doesn't exist", actual2);
-		
+
 		//empService.deleteEmpById(1);
 
 	}
@@ -166,8 +203,8 @@ public class EmployeeServiceImplTest {
 	 * 
 	 * }
 	 */
-	
-	
+
+
 	@Test
 	public void createEmpTest() {
 
@@ -188,6 +225,17 @@ public class EmployeeServiceImplTest {
 		 * assertNotEquals("Employee Createdas",actualEmp);
 		 */
 	}
+	
+	
+	/*
+	 * @Test public void getEmpByIdTest1() {
+	 * 
+	 * long empId = 1234L; Employee emp = new Employee(); emp.setEmpId(empId);
+	 * 
+	 * Mockito.when(empRepo.findByEmpId(empId)).thenReturn(emp); EmployeeDTO empDto
+	 * = empService.getEmpById(emp.getEmpId()); assertEquals(empId,
+	 * empDto.getEmpId()); }
+	 */
 
 
 }

@@ -13,7 +13,7 @@ public interface EmployeeService {
 
 	public List<EmployeeDTO> getEmpList();
 
-	public EmployeeDTO getEmpById(long id) throws ApplicationException;
+	public EmployeeDTO getEmpById(long id) ;
 
 	public String updateEmpDetails(EmployeeDTO emp);
 

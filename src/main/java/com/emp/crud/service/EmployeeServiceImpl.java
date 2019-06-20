@@ -3,7 +3,6 @@ package com.emp.crud.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,23 +32,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		//modelMapper.map(empList, empListDTO);
 		//empListDTO.addAll(empList);
-		
 		empList.forEach(emp -> empListDTO.add(modelMapper.map(emp, EmployeeDTO.class)));
 	
 		return empListDTO;
 	}
 
-	public EmployeeDTO getEmpById(long id) throws ApplicationException {
-		try {
+	public EmployeeDTO getEmpById(long id) {
+		//try {
 			EmployeeDTO  empDTO = new EmployeeDTO();
+			Employee emp = new Employee();
 			
-			Employee emp = employeeRepository.findByEmpId(id);
+			emp = employeeRepository.findByEmpId(id);
 			empDTO =  modelMapper.map(emp, EmployeeDTO.class);
 			return empDTO;
 			
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			throw new ApplicationException("Employee does not exist with the given id");
-		}
+		}*/
 	}
 
 	@Override
