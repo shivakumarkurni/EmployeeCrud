@@ -20,7 +20,6 @@ import com.emp.crud.model.Employee;
 import com.emp.crud.service.EmployeeService;
 
 @RestController
-@RequestMapping("/rest")
 public class EmployeeController {
 
 	@Autowired
@@ -33,9 +32,9 @@ public class EmployeeController {
 	}
 
 	@PostMapping("/createEmployee")
-	public String createEmployee(@RequestBody EmployeeDTO employee) {
+	public ResponseEntity<String> createEmployee(@RequestBody EmployeeDTO employee) {
 
-		return employeeService.createEmp(employee);
+		return new ResponseEntity<String>(employeeService.createEmp(employee),HttpStatus.OK);
 	}
 
 	@GetMapping("/employeeById/{id}")

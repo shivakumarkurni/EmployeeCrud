@@ -31,12 +31,13 @@ public class EmployeeServiceImplTest {
 
 	@Mock
 	EmployeeRepository empRepo;
-	
-	
-	  @Mock ModelMapper modelMapper;
-	  
+
+
+	@Mock 
+	ModelMapper modelMapper;
+
 	//  @Before public void setUp() { modelMapper=new ModelMapper(); }
-	 
+
 
 	int expecteEmpCount = 3;
 
@@ -87,7 +88,7 @@ public class EmployeeServiceImplTest {
 		emp.setEmpContact("1313");
 		emp.setEmpEmail("asdfsd@gmail.com");
 		emp.setEmpName("Shiva");
-		
+
 		EmployeeDTO actualEmp = new EmployeeDTO();
 
 		actualEmp.setEmpId(3);
@@ -95,22 +96,22 @@ public class EmployeeServiceImplTest {
 		actualEmp.setEmpContact("1313");
 		actualEmp.setEmpEmail("asdfsd@gmail.com");
 		actualEmp.setEmpName("Shiva");
-		
-		
+
+
 		Mockito.when(modelMapper.map(emp,EmployeeDTO.class)).thenReturn(actualEmp);
-		
+
 		/*
 		 * actualEmp.setEmpId(3); actualEmp.setEmpAddress("bengaluru");
 		 * actualEmp.setEmpContact("1313"); actualEmp.setEmpEmail("asdfsd@gmail.com");
 		 * actualEmp.setEmpName("Shiva");
-*/		
-		 
+		 */		
+
 
 		Mockito.when(empRepo.findByEmpId(Mockito.anyLong())).thenReturn(emp);
-	//	actualEmp =  modelMapper.map(emp, EmployeeDTO.class);
-		
+		//	actualEmp =  modelMapper.map(emp, EmployeeDTO.class);
+
 		actualEmp = empService.getEmpById(emp.getEmpId());
-		
+
 		System.out.println("actualEmp "+actualEmp.getEmpId());
 
 		assertEquals(emp.getEmpId(), actualEmp.getEmpId());
@@ -142,11 +143,11 @@ public class EmployeeServiceImplTest {
 
 		String actualEmp = empService.updateEmpDetails(emp);
 
-		System.out.println("actualEmp "+actualEmp);
+		//System.out.println("actualEmp "+actualEmp);
 
 		assertEquals("employee details updated successfully", actualEmp);
 
-		assertNotEquals("employee details updated successfullyafadf", actualEmp);
+		//assertNotEquals("employee details updated successfullyafadf", actualEmp);
 
 
 	}
@@ -174,7 +175,7 @@ public class EmployeeServiceImplTest {
 		assertEquals("Employee deleted successfully", actaul);
 
 		String actual2=empService.deleteEmpById(34L);
-	//	System.out.println(actual2);
+		//	System.out.println(actual2);
 		assertEquals("Employee with id 34 Doesn't exist", actual2);
 
 		//empService.deleteEmpById(1);
@@ -225,8 +226,8 @@ public class EmployeeServiceImplTest {
 		 * assertNotEquals("Employee Createdas",actualEmp);
 		 */
 	}
-	
-	
+
+
 	/*
 	 * @Test public void getEmpByIdTest1() {
 	 * 

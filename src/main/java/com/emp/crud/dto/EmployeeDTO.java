@@ -9,18 +9,31 @@ public class EmployeeDTO {
 	private String empAddress;
 	private String empContact;
 
-	private EmployeeDTO employeeDTO;
+	//private EmployeeDTO employeeDTO;
 
-	public EmployeeDTO getEmployeeDTO() {
-		return employeeDTO;
-	}
-
-	public void setEmployeeDTO(EmployeeDTO employeeDTO) {
-		this.employeeDTO = employeeDTO;
-	}
+	/*
+	 * public EmployeeDTO getEmployeeDTO() { return employeeDTO; }
+	 * 
+	 * public void setEmployeeDTO(EmployeeDTO employeeDTO) { this.employeeDTO =
+	 * employeeDTO; }
+	 */
+	
 
 	public long getEmpId() {
 		return empId;
+	}
+
+	public EmployeeDTO() {
+		super();
+	}
+
+	public EmployeeDTO(long empId, String empName, String empEmail, String empAddress, String empContact) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.empEmail = empEmail;
+		this.empAddress = empAddress;
+		this.empContact = empContact;
 	}
 
 	public void setEmpId(long empId) {
